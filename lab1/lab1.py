@@ -80,5 +80,5 @@ def task2():
     print('1/(N-1) = ', 1. / (n - 1))
 
 
-#task1()
+task1()
 task2()
