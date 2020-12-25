@@ -2,27 +2,39 @@ import numpy as np
 import sympy as sp
 from mpmath import findroot
 
-def markBecca(midMatrix, radMatrix):
+def markBecca(midMatrix, radMatrix, printOut=True):
     midInvAbsMatrix = np.abs(np.linalg.inv(midMatrix))
 
     A = midInvAbsMatrix.dot(radMatrix)
     rho = np.max(np.abs(np.linalg.eigvals(A)))
 
-    if rho < 1:
-        print('Result Becca`s mark: Non-special matrix, rho = ', np.around(rho, decimals=3))
+    if printOut:
+        if rho < 1:
+            print('Result Becca`s mark: Non-special matrix, rho = ', np.around(rho, decimals=3))
+        else:
+            print('Result Becca`s mark: Undefined, rho = ', np.around(rho, decimals=3))
     else:
-        print('Result Becca`s mark: Undefined, rho = ', np.around(rho, decimals=3))
+        if rho < 1:
+            return 'Non-special matrix', rho
+        else:
+            return 'Undefined', rho
 
 
-def markDiagMax(midMatrix, radMatrix, size):
+def markDiagMax(midMatrix, radMatrix, size, printOut=True):
     midInvAbsMatrix = np.abs(np.linalg.inv(midMatrix))
     A = radMatrix.dot(midInvAbsMatrix)
 
     dMax = max([A[i][i] for i in range(size)])
-    if dMax >= 1:
-        print('Result Diagonal max mark: Special matrix, Max value in diag = ', np.around(dMax, decimals=3))
+    if printOut:
+        if dMax >= 1:
+            print('Result Diagonal max mark: Special matrix, Max value in diag = ', np.around(dMax, decimals=3))
+        else:
+            print('Result Diagonal max mark: Undefined, Max value in diag = ', np.around(dMax, decimals=3))
     else:
-        print('Result Diagonal max mark: Undefined, Max value in diag = ', np.around(dMax, decimals=3))
+        if dMax >= 1:
+            return 'Special matrix', dMax
+        else:
+            return 'Undefined', dMax
 
 
 def intMul(int1, int2):
@@ -47,6 +59,25 @@ def task1():
     markDiagMax(midMatrix, radMatrix, len(matrix))
     D = det2(matrix)
     print('det = (', np.around(D[0], decimals=3), ',', np.around(D[1], decimals=5), ')')
+    if D[0] <= 0:
+        left = 0
+        right = eps
+        while abs(right - left) > 1E-3:
+            middle = (left + right) / 2
+            matr = [[[1 - middle, 1 + middle], [1 - middle, 1 + middle]], [[1.1 - middle, 1.1 + middle], [1 - middle, 1 + middle]]]
+            D = det2(matr)
+            if D[0] * D[1] <= 0:
+                right = middle
+            else:
+                left = middle
+        middle = right
+        matr = [[[1 - middle, 1 + middle], [1 - middle, 1 + middle]],
+                [[1.1 - middle, 1.1 + middle], [1 - middle, 1 + middle]]]
+        D = det2(matr)
+        print('Found eps: ', middle)
+        print('det = (', np.around(D[0], decimals=3), ',', np.around(D[1], decimals=5), ')')
+
+
 
 
 def task2():
@@ -81,4 +112,4 @@ def task2():
 
 
 task1()
-task2()
+#task2()
