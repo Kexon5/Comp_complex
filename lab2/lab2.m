@@ -1,4 +1,4 @@
-path = 'C:\Users\ΐνδπει\Documents\MATLAB';
+path = 'C:\Users\Γ€Γ­Γ¤Γ°Γ¥Γ©\Documents\MATLAB';
 X = intval([infsup(-5, 5), infsup(-5, 5)]);
 
 % rasstrigin function
@@ -43,7 +43,7 @@ saveas(gcf, fullfile(path, 'Three-hump camel function'), 'png');
 min_value = diff(1)
 index_min = 0;
 for i = 1 : length(WorkList)
-   if diff(i) - min_value <= 1e-2
+   if diff(i) < min_value
        index_min = i;
        min_value = diff(i)
    end
