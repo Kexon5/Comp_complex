@@ -1,4 +1,4 @@
-path = 'C:\Users\Ã€Ã­Ã¤Ã°Ã¥Ã©\Documents\MATLAB';
+path = 'C:\Users\Àíäðåé\Documents\MATLAB';
 X = intval([infsup(-5, 5), infsup(-5, 5)]);
 
 % rasstrigin function
@@ -13,11 +13,6 @@ title('Constriction of area');
 
 saveas(gcf, fullfile(path, 'Rastrigin function'), 'png'); 
 
-for i = 1:30
-    disp(WorkList(i).Box);
-    s = ['f(y) = ', num2str(WorkList(i).Estim)];
-    disp(s);
-end
 
 % Three-hump camel function
 [Z, WorkList, diams] = globopt0(X);
@@ -43,9 +38,29 @@ saveas(gcf, fullfile(path, 'Three-hump camel function'), 'png');
 min_value = diff(1)
 index_min = 0;
 for i = 1 : length(WorkList)
-   if diff(i) < min_value
+   if diff(i) - min_value <= 1e-2
        index_min = i;
        min_value = diff(i)
    end
 end
 key
+
+x_center = [];
+y_center = [];
+for i = 101 : length(WorkList)
+    x_center(i) = WorkList(i).Box(1).mid;
+    y_center(i) = WorkList(i).Box(2).mid;
+end
+
+% Trajectory of bar center
+x = linspace(-5,5);
+y = linspace(-5,5);
+[X,Y] = meshgrid(x,y);
+Z = 2 .* X .^2 - 1.05 .* X .^ 4 + X .^ 6 / 6 + X .* Y + Y .^ 2;
+contour(X,Y,Z, 20)
+hold on
+plot(x_center, y_center); 
+xlabel('Center X');
+ylabel('Center Y');
+title('Trajectory of bar center');
+saveas(gcf, fullfile(path, 'Trajectory center'), 'png'); 
