@@ -5,7 +5,7 @@ Aconst = [19 11;10 15;14 12]
 A=[infsup(17,21) infsup(9,13);infsup(8,12) infsup(13,17);infsup(10,18) infsup(10,14)]
 x=[0.3;0.2]
 bconst=Aconst*x
-b=[infsup(5.9,9.9);infsup(4,8);infsup(4.1,9.1)]
+b=[infsup(6.4,9.4);infsup(4.5,7.5);infsup(4.6,8.6)]
 
 [V, P1, P2, P3, P4]=EqnTolR2(inf(A),sup(A),inf(b),sup(b))
 Cminim=cond(inf(A));
@@ -34,8 +34,8 @@ disp('Matrix=')
 disp(MatrixM)
 disp('__________________')
 
-maxTol = 0.917538;
-argmaxTol = [0.28947693, 0.21227687]';
+maxTol = 0.41754343;
+argmaxTol = [0.28947346, 0.21228088]';
 
 ive=sqrt(2)*Cminim*maxTol*(norm(argmaxTol)/norm(mid(b)))
 Xsolv=[argmaxTol-ive,argmaxTol+ive]
@@ -60,7 +60,7 @@ Aconst2=[19 11;10 15;14 12]'
 A2=[infsup(17,21) infsup(9,13);infsup(8,12) infsup(13,17);infsup(10,18) infsup(10,14)]'
 x2=[0.3;0.2;0.1]
 bconst2=Aconst2*x2
-b2=[infsup(7.1,11.1);infsup(5,10)]
+b2=[infsup(7.6,10.6);infsup(5.5,9.5)]
 
 
 Cminim2=cond(inf(A2));
@@ -89,7 +89,7 @@ disp('Matrix2=')
 disp(MatrixM2)
 disp('__________________')
 
-maxTol2 = 0.8639954;
+maxTol2 = 0.3639954;
 argmaxTol2 = [3.79999850e-01 1.88001053e-01 -5.81838840e-07]';
 
 ive2=sqrt(3)*Cminim2*maxTol2*(norm(argmaxTol2)/norm(mid(b2)))
