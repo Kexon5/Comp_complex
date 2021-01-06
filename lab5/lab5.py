@@ -26,15 +26,15 @@ def plot_graph(x, x_inf, x_sup, name='Picture.png'):
     plt.show()
 
 
-def plot_graph2(x, formal_x_inf, formal_x_sup, subd_x_inf, subd_x_sup, cross_x_inf, cross_x_sup, name='Picture'):
+def plot_graph2(x, f_x_inf, f_x_sup, s_x_inf, s_x_sup, cross_x_inf, cross_x_sup, name='Picture'):
     plt.figure(figsize=(16, 9))
     plt.plot(x, label='Исходное сгенерированное решение')
 
-    plt.plot(formal_x_inf, label='Inf для решения 1 матрицы')
-    plt.plot(formal_x_sup, label='Sup для решения 1 матрицы')
+    plt.plot(f_x_inf, label='Inf для решения 1 матрицы')
+    plt.plot(f_x_sup, label='Sup для решения 1 матрицы')
 
-    plt.plot(subd_x_inf, 'b', label='Inf для решения 2 матрицы', ls='--')
-    plt.plot(subd_x_sup, 'r', label='Sup для решения 2 матрицы', ls='--')
+    plt.plot(s_x_inf, 'b', label='Inf для решения 2 матрицы', ls='--')
+    plt.plot(s_x_sup, 'r', label='Sup для решения 2 матрицы', ls='--')
 
     plt.plot(cross_x_inf, 'bo', label='Inf для пересечения решений')
     plt.plot(cross_x_sup, 'ro', label='Sup для пересечения решений')
@@ -220,16 +220,16 @@ def crossSolution(first_sol_x, second_sol_x):
     c_inf, c_sup = -second_sol_x[:middle_index], second_sol_x[middle_index:]
     second_sol_x = np.array([c_inf, c_sup]).T
 
-    dual_formal = [False for i in range(len(first_sol_x))]
-    dual_cur = [False for i in range(len(first_sol_x))]
+    dual_f = [False for i in range(len(first_sol_x))]
+    dual_s= [False for i in range(len(first_sol_x))]
 
     for i in range(len(first_sol_x)):
         if first_sol_x[i][0] >= first_sol_x[i][1]:
-            dual_formal[i] = True
+            dual_f[i] = True
             first_sol_x[i].sort()
 
         if second_sol_x[i][0] >= second_sol_x[i][1]:
-            dual_cur[i] = True
+            dual_s[i] = True
             second_sol_x[i].sort()
 
         if second_sol_x[i][1] < first_sol_x[i][0] or first_sol_x[i][1] < second_sol_x[i][0]:
@@ -243,7 +243,7 @@ def crossSolution(first_sol_x, second_sol_x):
         elif first_sol_x[i][0] <= second_sol_x[i][0] and second_sol_x[i][1] <= first_sol_x[i][1]:
             cross.append(second_sol_x[i])
 
-        if dual_formal[i] or dual_cur[i]:
+        if dual_f[i] or dual_s[i]:
             tmp = cross[i][0]
             cross[i][0] = cross[i][1]
             cross[i][1] = tmp
